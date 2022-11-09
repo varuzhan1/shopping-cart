@@ -1,4 +1,4 @@
-package com.shoppingCart.persistence.model;
+package com.shoppingCart.persistence.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package com.shoppingCart.mapper;
+package com.shoppingCart.util;
 
 import io.jsonwebtoken.*;
 import lombok.extern.log4j.Log4j2;
@@ -14,9 +14,8 @@ import java.util.Map;
 @Log4j2
 public class TokenManager {
 
-
     public static final long TOKEN_VALIDITY = 10 * 60 * 60;
-    private static final long serialVersionUID = 7008375124389347049L;
+
     @Value("${secret}")
     private String jwtSecret;
 

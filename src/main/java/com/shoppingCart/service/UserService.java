@@ -1,7 +1,7 @@
 package com.shoppingCart.service;
 
-import com.shoppingCart.persistence.model.Role;
-import com.shoppingCart.persistence.model.User;
+import com.shoppingCart.persistence.entity.Role;
+import com.shoppingCart.persistence.entity.User;
 import com.shoppingCart.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,8 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserService {
 
-    @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public User save(User user) {
 

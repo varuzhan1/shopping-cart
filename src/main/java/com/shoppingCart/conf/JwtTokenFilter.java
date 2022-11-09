@@ -1,6 +1,6 @@
 package com.shoppingCart.conf;
 
-import com.shoppingCart.mapper.TokenManager;
+import com.shoppingCart.util.TokenManager;
 import com.shoppingCart.persistence.repository.UserRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

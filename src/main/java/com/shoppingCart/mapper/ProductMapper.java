@@ -1,58 +1,26 @@
 package com.shoppingCart.mapper;
 
-import com.shoppingCart.persistence.dto.ProductCreateDto;
-import com.shoppingCart.persistence.dto.ProductOutDto;
-import com.shoppingCart.persistence.dto.ProductUpdateDto;
-import com.shoppingCart.persistence.model.Product;
+import com.shoppingCart.persistence.dto.ProductDto;
+import com.shoppingCart.persistence.entity.Product;
+import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.impl.ConfigurableMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductMapper {
-
-//    public ProductCreateDto convertEntityToCreateDto(Product entity) {
-//        return ProductCreateDto.builder()
-//                .name(entity.getName())
-//                .price(entity.getPrice())
-//                .stockCount(entity.getStockCount())
-//                .description(entity.getDescription())
-//                .type(entity.getType())
-//                .build();
-//    }
-
-    public Product convertDtoToEntity(ProductCreateDto dto) {
-
-        Product entity = new Product();
-        entity.setName(dto.getName());
-        entity.setDescription(dto.getDescription());
-        entity.setPrice(dto.getPrice());
-        entity.setType(dto.getType());
-        entity.setStockCount(dto.getStockCount());
-        return entity;
-    }
-
-    public Product convertUpdateDtoToEntity(ProductUpdateDto dto) {
-        Product entity = new Product();
-        entity.setId(dto.getId());
-        entity.setName(dto.getName());
-        entity.setDescription(dto.getDescription());
-        entity.setPrice(dto.getPrice());
-        entity.setType(dto.getType());
-        entity.setStockCount(dto.getStockCount());
-        entity.setCreatedDate(dto.getCreatedDate());
-        return entity;
-    }
-
-    public ProductOutDto convertEntityToOutDto(Product entity) {
-        return ProductOutDto.builder()
-                .id(entity.getId())
-                .name(entity.getName())
-                .price(entity.getPrice())
-                .stockCount(entity.getStockCount())
-                .description(entity.getDescription())
-                .createdDate(entity.getCreatedDate())
-                .updatedDate(entity.getUpdatedDate())
-                .type(entity.getType())
-                .build();
+public class ProductMapper extends ConfigurableMapper {
+    @Override
+    protected void configure(MapperFactory factory) {
+        factory.classMap(Product.class, ProductDto.class)
+                .field("id", "id")
+                .field("name", "name")
+                .field("description", "description")
+                .field("type", "type")
+                .field("price", "price")
+                .field("stockCount", "stockCount")
+                .field("createdDate", "createdDate")
+                .field("updatedDate", "updatedDate")
+                .byDefault()
+                .register();
     }
 
 }

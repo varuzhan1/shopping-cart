@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: shoppingCard
+  main:
+    banner-mode: off
+  datasource:
+    url: jdbc:mysql://localhost:3306/shopping_cart
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        default_schema: shopping_cart
+  flyway:
+    schemas: shopping_cart
+    baselineOnMigrate: true
+
+secret: shoppingCart

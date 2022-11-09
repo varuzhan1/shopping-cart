@@ -18,6 +18,9 @@ Alternatively you can use the [Spring Boot Maven plugin](https://docs.spring.io/
 
 swagger url http://localhost:8080/swagger-ui/index.html
 
+configure your mysql db in application yml and create schema in db with name shopping_cart
+
+
 admin email and password
 
 email: testadmin@gmail.com 

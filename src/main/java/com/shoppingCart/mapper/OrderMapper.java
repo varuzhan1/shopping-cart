@@ -1,33 +1,24 @@
 package com.shoppingCart.mapper;
 
 import com.shoppingCart.persistence.dto.OrderDto;
-import com.shoppingCart.persistence.model.Order;
-import com.shoppingCart.persistence.model.OrderStatus;
+import com.shoppingCart.persistence.entity.Order;
+import com.shoppingCart.persistence.entity.OrderStatus;
+import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.impl.ConfigurableMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class OrderMapper {
-
-    public OrderDto convertEntityToDto(Order entity) {
-
-        return OrderDto.builder()
-                .id(entity.getId())
-                .productCount(entity.getProductCount())
-                .product(entity.getProduct())
-                .customer(entity.getCustomer())
-                .status(entity.getStatus().toString())
-                .build();
-    }
-
-    public Order convertDtoToEntity(OrderDto dto) {
-
-        Order entity = new Order();
-        entity.setId(dto.getId());
-        entity.setCustomer(dto.getCustomer());
-        entity.setProduct(dto.getProduct());
-        entity.setProductCount(dto.getProductCount());
-        entity.setStatus(OrderStatus.valueOf(dto.getStatus()));
-        return entity;
+public class OrderMapper extends ConfigurableMapper {
+    @Override
+    protected void configure(MapperFactory factory) {
+        factory.classMap(Order.class, OrderDto.class)
+                .field("id", "id")
+                .field("productCount", "productCount")
+                .field("status", "status")
+                .field("product", "product")
+                .field("customer", "customer")
+                .byDefault()
+                .register();
     }
 
 }

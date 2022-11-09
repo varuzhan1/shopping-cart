@@ -1,8 +1,7 @@
 package com.shoppingCart;
 
-import com.shoppingCart.persistence.dto.ProductCreateDto;
-import com.shoppingCart.persistence.dto.ProductUpdateDto;
-import com.shoppingCart.persistence.model.Product;
+import com.shoppingCart.persistence.dto.ProductDto;
+import com.shoppingCart.persistence.entity.Product;
 import com.shoppingCart.persistence.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,8 +14,8 @@ public class ProductDtoUtils {
     @Autowired
     private ProductRepository productRepository;
 
-    public ProductCreateDto buildProductCreateDto() {
-        return ProductCreateDto.builder()
+    public ProductDto buildProductCreateDto() {
+        return ProductDto.builder()
                 .name("Product create name")
                 .description("Product crate description")
                 .price(50)
@@ -25,8 +24,8 @@ public class ProductDtoUtils {
                 .build();
     }
 
-    public ProductUpdateDto buildProductUpdateDto(Integer id) {
-        return ProductUpdateDto.builder()
+    public ProductDto buildProductUpdateDto(Integer id) {
+        return ProductDto.builder()
                 .id(id)
                 .name("Product update name")
                 .description("Product update description")

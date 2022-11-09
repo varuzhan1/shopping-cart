@@ -1,33 +1,32 @@
 package com.shoppingCart.persistence.dto;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
+import lombok.Setter;
 import lombok.extern.jackson.Jacksonized;
 
-import javax.validation.Valid;
+import java.time.LocalDate;
 
 @Getter
-@SuperBuilder
+@Setter
+@Builder
 @Jacksonized
-@ToString
-@Valid
-public class ProductCreateDto {
+public class ProductDto {
 
-    @NonNull
+    private Integer id;
+
     private String name;
 
-    @NonNull
     private String description;
 
-    @NonNull
     private String type;
 
-    @NonNull
     private Integer price;
 
-    @NonNull
     private Integer stockCount;
+
+    private LocalDate createdDate;
+
+    private LocalDate updatedDate;
 
 }

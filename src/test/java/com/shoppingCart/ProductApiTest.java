@@ -2,17 +2,18 @@ package com.shoppingCart;
 
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.shoppingCart.mapper.TokenManager;
-import com.shoppingCart.persistence.dto.ProductOutDto;
-import com.shoppingCart.persistence.model.Product;
+import com.shoppingCart.persistence.dto.ProductDto;
+import com.shoppingCart.persistence.entity.Product;
+import com.shoppingCart.persistence.repository.ProductRepository;
 import com.shoppingCart.persistence.repository.UserRepository;
+import com.shoppingCart.util.TokenManager;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -22,38 +23,52 @@ import java.util.List;
 
 @AutoConfigureMockMvc
 @SpringBootTest
-@Sql(value = {"../../insert_user.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(value = {"../../delete_user.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class ProductApiTest {
 
-    @Autowired
+
     protected MockMvc mockMvc;
-    @Autowired
+
     private TestRequestUtils testRequestUtils;
-    @Autowired
+
     private ProductDtoUtils productDtoUtils;
-    @Autowired
+
     private TokenManager jwtUtil;
 
     private String token;
 
-    @Autowired
     UserRepository userRepository;
 
+    ProductRepository productRepository;
+
+    @Autowired
+    public ProductApiTest(MockMvc mockMvc, TestRequestUtils testRequestUtils, ProductDtoUtils productDtoUtils,
+                          TokenManager jwtUtil, UserRepository userRepository, ProductRepository productRepository) {
+        this.mockMvc = mockMvc;
+        this.testRequestUtils = testRequestUtils;
+        this.productDtoUtils = productDtoUtils;
+        this.jwtUtil = jwtUtil;
+        this.userRepository = userRepository;
+        this.productRepository = productRepository;
+    }
 
     @BeforeEach
     void before() {
         token = jwtUtil.generateJwtToken(userRepository.findByEmail("testadmin@gmail.com").orElseThrow());
     }
 
+    @AfterEach
+    void after() {
+        productRepository.deleteAll();
+    }
+
     @Test
     void create_product() throws Exception {
 
-        ResultActions savedResult = testRequestUtils.request(MockMvcRequestBuilders.post("/product")
+        ResultActions savedResult = testRequestUtils.request(MockMvcRequestBuilders.post("/products")
                         .header("Authorization", "Bearer ".concat(token)),
                 productDtoUtils.buildProductCreateDto()).andExpect(MockMvcResultMatchers.status().isOk());
 
-        ProductOutDto createResultDto = testRequestUtils.getBodyContentAsObject(savedResult, ProductOutDto.class);
+        ProductDto createResultDto = testRequestUtils.getBodyContentAsObject(savedResult, ProductDto.class);
 
         Assertions.assertNotNull(createResultDto);
         Assertions.assertNotNull(createResultDto.getId());
@@ -71,11 +86,11 @@ public class ProductApiTest {
 
         Product savedProduct = productDtoUtils.createProduct();
 
-        ResultActions updateResult = testRequestUtils.request(MockMvcRequestBuilders.put("/product")
+        ResultActions updateResult = testRequestUtils.request(MockMvcRequestBuilders.put("/products")
                         .header("Authorization", "Bearer ".concat(token)),
                 productDtoUtils.buildProductUpdateDto(savedProduct.getId())).andExpect(MockMvcResultMatchers.status().isOk());
 
-        ProductOutDto updateResultDto = testRequestUtils.getBodyContentAsObject(updateResult, ProductOutDto.class);
+        ProductDto updateResultDto = testRequestUtils.getBodyContentAsObject(updateResult, ProductDto.class);
 
         Assertions.assertEquals(savedProduct.getId(), updateResultDto.getId());
         Assertions.assertEquals(savedProduct.getCreatedDate(), updateResultDto.getCreatedDate());
@@ -93,10 +108,10 @@ public class ProductApiTest {
         productDtoUtils.createProduct();
         productDtoUtils.createProduct();
 
-        ResultActions loadByIdResult = testRequestUtils.request(MockMvcRequestBuilders.get("/product")
+        ResultActions loadByIdResult = testRequestUtils.request(MockMvcRequestBuilders.get("/products")
                 .header("Authorization", "Bearer ".concat(token))).andExpect(MockMvcResultMatchers.status().isOk());
 
-        List<ProductOutDto> loadByIdResultDto = testRequestUtils.toList(loadByIdResult, new TypeReference<List<ProductOutDto>>() {
+        List<ProductDto> loadByIdResultDto = testRequestUtils.toList(loadByIdResult, new TypeReference<List<ProductDto>>() {
         });
 
         Assertions.assertEquals(loadByIdResultDto.size(), 2);
@@ -108,7 +123,7 @@ public class ProductApiTest {
 
         Product savedProduct = productDtoUtils.createProduct();
 
-        testRequestUtils.request(MockMvcRequestBuilders.delete("/product/".concat(savedProduct.getId().toString()))
+        testRequestUtils.request(MockMvcRequestBuilders.delete("/products/".concat(savedProduct.getId().toString()))
                         .header("Authorization", "Bearer ".concat(token)),
                 productDtoUtils.buildProductUpdateDto(savedProduct.getId())).andExpect(MockMvcResultMatchers.status().isOk());
 

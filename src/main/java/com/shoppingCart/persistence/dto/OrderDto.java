@@ -1,7 +1,7 @@
 package com.shoppingCart.persistence.dto;
 
-import com.shoppingCart.persistence.model.OrderUser;
-import com.shoppingCart.persistence.model.Product;
+import com.shoppingCart.persistence.entity.OrderUser;
+import com.shoppingCart.persistence.entity.Product;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;

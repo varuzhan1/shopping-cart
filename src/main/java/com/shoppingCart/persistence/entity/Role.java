@@ -1,4 +1,4 @@
-package com.shoppingCart.persistence.model;
+package com.shoppingCart.persistence.entity;
 
 public enum Role {
 
