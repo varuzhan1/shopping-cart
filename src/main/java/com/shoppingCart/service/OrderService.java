@@ -6,6 +6,7 @@ import com.shoppingCart.persistence.dto.OrderDto;
 import com.shoppingCart.persistence.entity.Order;
 import com.shoppingCart.persistence.entity.OrderStatus;
 import com.shoppingCart.persistence.repository.OrderRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,30 +16,26 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class OrderService {
 
-    private OrderRepository repo;
+    private final OrderRepository repo;
 
-    private OrderMapper orderMapper;
-    @Autowired
-    public OrderService(OrderRepository repo, OrderMapper orderMapper) {
-        this.repo = repo;
-        this.orderMapper = orderMapper;
-    }
+    private final OrderMapper orderMapper;
 
     public OrderDto create(@Valid OrderDto dto) {
 
-        Order mappedOrder = orderMapper.map(dto, Order.class);
+        Order mappedOrder = orderMapper.mapToEntity(dto);
         mappedOrder.setStatus(OrderStatus.PROCESSING);
         Order saved = repo.save(mappedOrder);
-        return orderMapper.map(saved, OrderDto.class);
+        return orderMapper.mapToDto(saved);
 
     }
 
     public OrderDto update(@Valid OrderDto dto) {
 
-        Order saved = repo.save(orderMapper.map(dto, Order.class));
-        return orderMapper.map(saved, OrderDto.class);
+        Order saved = repo.save(orderMapper.mapToEntity(dto));
+        return orderMapper.mapToDto(saved);
 
     }
 
@@ -50,19 +47,19 @@ public class OrderService {
 
     public List<OrderDto> getOrders() {
 
-        return repo.findAll().stream().map(item -> orderMapper.map(item, OrderDto.class)).collect(Collectors.toList());
+        return repo.findAll().stream().map(orderMapper::mapToDto).collect(Collectors.toList());
 
     }
 
     public OrderDto getOrderById(Integer id) {
 
-        return orderMapper.map(repo.findById(id).orElseThrow(InvalidParameterException::new), OrderDto.class);
+        return orderMapper.mapToDto(repo.findById(id).orElseThrow(InvalidParameterException::new));
 
     }
 
     public List<OrderDto> getOrderByStatus(OrderStatus status) {
 
-        return repo.findOrdersByStatus(status).stream().map(item -> orderMapper.map(item, OrderDto.class)).collect(Collectors.toList());
+        return repo.findOrdersByStatus(status).stream().map(item -> orderMapper.mapToDto(item)).collect(Collectors.toList());
 
     }
 }

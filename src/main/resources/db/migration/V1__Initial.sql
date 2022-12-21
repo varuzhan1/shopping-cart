@@ -29,7 +29,7 @@ create table shopping_cart.product
 );
 
 
-create table if not exists shopping_cart.`order`
+create table if not exists shopping_cart.order
 (
     id            bigint       not null
         primary key,
@@ -46,5 +46,5 @@ create table if not exists shopping_cart.`order`
 
 
 
-insert into shopping_cart.`user`  (id, name, surname, birthday, email, password, role)
+insert into shopping_cart.user  (id, name, surname, birthday, email, password, role)
 values (1, 'admin', 'test Admin', '2022-10-31', 'testadmin@gmail.com', 'password', 'ADMIN');

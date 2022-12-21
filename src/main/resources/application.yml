@@ -1,13 +1,21 @@
 spring:
+
   application:
     name: shoppingCard
+
   main:
     banner-mode: off
   datasource:
-    url: jdbc:mysql://localhost:3306/shopping_cart
-    driverClassName: com.mysql.cj.jdbc.Driver
-    username: root
+#    url: jdbc:mysql://localhost:3306/shopping_cart
+#    driverClassName: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: root
+
+    username: postgres
     password: root
+    url: jdbc:postgresql://postgresql:5432/shopping_cart?currentSchema=shopping_cart
+#    driverClassName: org.postgresql.Driver
+
   jpa:
     hibernate:
       ddl-auto: none
@@ -19,3 +27,6 @@ spring:
     baselineOnMigrate: true
 
 secret: shoppingCart
+server:
+  port: 80
+  address: 0.0.0.0

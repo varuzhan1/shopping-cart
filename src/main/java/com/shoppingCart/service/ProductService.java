@@ -28,25 +28,25 @@ public class ProductService {
 
     public ProductDto create(@Valid ProductDto dto) {
 
-        Product mappedProduct = productMapper.map(dto, Product.class);
+        Product mappedProduct = productMapper.mapToEntity(dto);
         mappedProduct.setCreatedDate(LocalDate.now());
         mappedProduct.setUpdatedDate(LocalDate.now());
 
-        return productMapper.map(productRepository.saveAndFlush(mappedProduct), ProductDto.class);
+        return productMapper.mapToDto(productRepository.saveAndFlush(mappedProduct));
     }
 
     public ProductDto update(@Valid ProductDto dto) {
 
-        Product mappedProduct = productMapper.map(dto, Product.class);
+        Product mappedProduct = productMapper.mapToEntity(dto);
         mappedProduct.setUpdatedDate(LocalDate.now());
 
-        return productMapper.map(productRepository.saveAndFlush(mappedProduct), ProductDto.class);
+        return productMapper.mapToDto(productRepository.saveAndFlush(mappedProduct));
     }
 
     public List<ProductDto> loadAllProducts() {
 
         List<Product> products = productRepository.findAll(Sort.by(Sort.Direction.ASC, "price"));
-        return products.stream().map(item -> productMapper.map(item, ProductDto.class)).collect(Collectors.toList());
+        return products.stream().map(item -> productMapper.mapToDto(item)).collect(Collectors.toList());
     }
 
     public void delete(Integer id) {
@@ -64,6 +64,6 @@ public class ProductService {
     public List<ProductDto> loadByKey(String key) {
 
         List<Product> products = productRepository.findAll(getFilterQuery(key));
-        return products.stream().map(item -> productMapper.map(item, ProductDto.class)).collect(Collectors.toList());
+        return products.stream().map(item -> productMapper.mapToDto(item)).collect(Collectors.toList());
     }
 }

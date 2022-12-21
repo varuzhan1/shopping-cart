@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  postgresql:
+    image: postgres:15beta3
+    container_name: PostgreSQL
+    restart: always
+    ports:
+      - "5431:5432"
+    environment:
+      POSTGRES_PASSWORD: root
+    volumes:
+      - C:\Users\HP\Desktop\vecondev\projects\shopping-cart\docker\init.sql:/docker-entrypoint-initdb.d/create_schema.sql
+
+  adminer:
+    image: adminer:4.8.1-standalone
+    restart: always
+    ports:
+      - "8080:8080"
+
+  shoppingCart:
+    image: shopping_cart
+    container_name: shoppingCart
+    ports:
+      - "80:80"
+    depends_on:
+      - postgresql
+      - adminer
