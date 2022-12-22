@@ -10,8 +10,6 @@ services:
     environment:
       POSTGRES_PASSWORD: root
     volumes:
-#      - /home/ubuntu/shopping-cart/docker/init.sql:/docker-entrypoint-initdb.d/create_schema.sql
-      - #      - C:\Users\HP\Desktop\vecondev\projects\shopping-cart\docker\init.sql:/docker-entrypoint-initdb.d/create_schema.sql
       - /home/ubuntu/shopping-cart/init.sql:/docker-entrypoint-initdb.d/create_schema.sql
 
   adminer:
