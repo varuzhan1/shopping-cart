@@ -10,7 +10,7 @@ services:
     environment:
       POSTGRES_PASSWORD: root
     volumes:
-      - C:\Users\HP\Desktop\vecondev\projects\shopping-cart\docker\init.sql:/docker-entrypoint-initdb.d/create_schema.sql
+      - /home/ubuntu/shopping-cart/docker/init.sql:/docker-entrypoint-initdb.d/create_schema.sql
 
   adminer:
     image: adminer:4.8.1-standalone
