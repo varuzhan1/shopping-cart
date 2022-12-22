@@ -13,7 +13,7 @@ spring:
 
     username: postgres
     password: root
-    url: jdbc:postgresql://localhost:5432/shopping_cart?currentSchema=shopping_cart
+    url: jdbc:postgresql://postgresql:5432/shopping_cart?currentSchema=shopping_cart
 #    driverClassName: org.postgresql.Driver
 
   jpa:

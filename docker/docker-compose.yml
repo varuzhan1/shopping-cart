@@ -10,7 +10,9 @@ services:
     environment:
       POSTGRES_PASSWORD: root
     volumes:
-      - /home/ubuntu/shopping-cart/docker/init.sql:/docker-entrypoint-initdb.d/create_schema.sql
+#      - /home/ubuntu/shopping-cart/docker/init.sql:/docker-entrypoint-initdb.d/create_schema.sql
+      - #      - C:\Users\HP\Desktop\vecondev\projects\shopping-cart\docker\init.sql:/docker-entrypoint-initdb.d/create_schema.sql
+      - /home/ubuntu/shopping-cart/init.sql:/docker-entrypoint-initdb.d/create_schema.sql
 
   adminer:
     image: adminer:4.8.1-standalone
@@ -22,7 +24,7 @@ services:
     image: shopping_cart
     container_name: shoppingCart
     ports:
-      - "80:80"
+      - "81:81"
     depends_on:
       - postgresql
       - adminer
