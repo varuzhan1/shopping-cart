@@ -6,7 +6,7 @@ services:
     container_name: PostgreSQL
     restart: always
     ports:
-      - "5431:5432"
+      - "5432:5432"
     environment:
       POSTGRES_PASSWORD: root
     volumes:
@@ -22,7 +22,7 @@ services:
     image: shopping_cart
     container_name: shoppingCart
     ports:
-      - "81:81"
+      - "80:80"
     depends_on:
       - postgresql
       - adminer
