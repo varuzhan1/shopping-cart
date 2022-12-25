@@ -10,7 +10,7 @@ services:
     environment:
       POSTGRES_PASSWORD: root
     volumes:
-      - /home/ubuntu/shopping-cart/src/main/resources/db/init.sql:/docker-entrypoint-initdb.d/create_schema.sql
+      - /home/ubuntu/shopping-cart/init.sql:/docker-entrypoint-initdb.d/create_schema.sql
 
   adminer:
     image: adminer:4.8.1-standalone
