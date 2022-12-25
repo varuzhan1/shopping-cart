@@ -25,6 +25,7 @@ spring:
   flyway:
     schemas: shopping_cart
     baselineOnMigrate: true
+    enabled: false
 
 secret: shoppingCart
 server:
