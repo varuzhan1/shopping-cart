@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  postgres:
+  postgresql:
     image: postgres:15beta3
-    container_name: PostgreSQL
+    container_name: postgresql
     restart: always
     ports:
       - "5432:5432"
@@ -24,5 +24,5 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - postgres
+      - postgresql
       - adminer
