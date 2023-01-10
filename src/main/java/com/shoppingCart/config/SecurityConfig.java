@@ -1,4 +1,4 @@
-package com.shoppingCart.conf;
+package com.shoppingCart.config;
 
 import com.shoppingCart.persistence.repository.UserRepository;
 import org.springframework.context.annotation.Bean;

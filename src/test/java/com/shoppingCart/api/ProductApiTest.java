@@ -1,7 +1,9 @@
-package com.shoppingCart;
+package com.shoppingCart.api;
 
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.shoppingCart.ProductDtoUtils;
+import com.shoppingCart.TestRequestUtils;
 import com.shoppingCart.persistence.dto.ProductDto;
 import com.shoppingCart.persistence.entity.Product;
 import com.shoppingCart.persistence.repository.ProductRepository;

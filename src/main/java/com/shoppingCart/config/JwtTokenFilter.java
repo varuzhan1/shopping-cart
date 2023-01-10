@@ -1,4 +1,4 @@
-package com.shoppingCart.conf;
+package com.shoppingCart.config;
 
 import com.shoppingCart.util.TokenManager;
 import com.shoppingCart.persistence.repository.UserRepository;
